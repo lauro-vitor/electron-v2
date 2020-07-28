@@ -1,0 +1,23 @@
+//User
+const ADD_USER  =  'ADD_USER';
+const DESTROY_USER = 'DESTROY_USER';
+const UPDATE_USER = 'UPDATE_USER';
+const GET_ALL_USERS = 'GET_ALL_USERS';
+
+//Persons
+const GET_ALL_PERSON = 'GET_ALL_PERSON';
+const ADD_PERSON = 'ADD_PERSON';
+const UPDATE_PERSON = 'UPDATE_PERSON';
+const DESTROY_PERSON = 'DESTROY_PERSON';
+
+const mutations = {
+    ADD_USER,
+    DESTROY_USER,
+    UPDATE_USER,
+    GET_ALL_USERS,
+    GET_ALL_PERSON,
+    ADD_PERSON,
+    UPDATE_PERSON,
+    DESTROY_PERSON
+}
+export default mutations;
