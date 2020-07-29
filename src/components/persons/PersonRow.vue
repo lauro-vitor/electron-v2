@@ -13,7 +13,7 @@
 <script>
 import ButtonDestroy from '../utils/ButtonDestroy'
 import RouterLinkButton from '../utils/RouterLinkButton'
-import {dispatchDestroyPerson} from '../../store/dispatchers/persons/'
+import {dispatchDestroyPerson} from '../../store/dispatchers/persons/DispatchPerson'
 import {booleanParseString} from '../../utils/'
 export default {
     data: () => ({

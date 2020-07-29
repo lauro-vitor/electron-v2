@@ -22,8 +22,8 @@ import SelectMember from '../form/SelectMember';
 import SelectUser from '../form/SelectUser';
 import validateNameOnKeyDown from "../../validators/persons/validateNameOnKeyDown";
 import validateFormPerson from "../../validators/persons/validateFormPerson";
-import { dispatchAddPerson } from "../../store/dispatchers/persons/";
-import { dispatchGetAllUser } from "../../store/dispatchers/users/";
+import { dispatchAddPerson } from "../../store/dispatchers/persons/DispatchPerson";
+import { dispatchGetAllUser } from "../../store/dispatchers/users/DispatchUser";
 import {stringParseBoolean} from '../../utils'
 import Loading from '../../components/utils/Loading'
 export default {

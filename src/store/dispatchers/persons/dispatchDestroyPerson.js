@@ -1,9 +1,9 @@
-import actions from '../../actions'
+import {PersonActions} from '../../actions/Actions'
 import store from '../../index'
 export default async function (id)  {
     try {
       await store.cache.dispatch({
-        type:actions.DESTROY_PERSON,
+        type:PersonActions.DESTROY_PERSON,
         id,
       });
     } catch (error) {

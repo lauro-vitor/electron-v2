@@ -4,7 +4,7 @@ const getAllUsers = require('./getAllUsers');
 const updateUser = require('./updateUser');
 const destroyUser = require('./destroyUser');
 
-const UserData = {
+const UserRepository = {
     createUser,
     getByIdUser,
     getAllUsers,
@@ -12,4 +12,4 @@ const UserData = {
     destroyUser
 };
 
-module.exports = UserData;
+module.exports = UserRepository;

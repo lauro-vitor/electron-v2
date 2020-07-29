@@ -1,10 +1,10 @@
-import actions from '../../actions'
+import {PersonActions} from '../../actions/Actions'
 import store from '../../index'
 
 export default async function (person) {
     try {
         await store.cache.dispatch({
-            type: actions.ADD_PERSON,
+            type: PersonActions.ADD_PERSON,
             person
         });
         alert('Membro adicionado com sucesso!');

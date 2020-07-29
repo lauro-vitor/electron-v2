@@ -1,5 +1,5 @@
 const {ipcRenderer} = window.require('electron');
-
+import {UserActions} from '../actions/Actions'
 //const main = remote.require('./background');
 
 
@@ -45,15 +45,13 @@ const moduleUser = {
     actions: {
        GET_ALL_USERS(){
            return new Promise((resolve, reject) => {
-               console.log(ipcRenderer.sendSync('synchronous-message', 'sync ping'));
-               
-               let i = 10;
-               if(i < 20){
-                   
-                   resolve();
-                   return;
-               }
-               reject();
+               try {
+                const getAllUser = ipcRenderer.sendSync(UserActions.GET_ALL_USERS, 'sync ping');
+                console.log('getAllUser', getAllUser )
+                resolve();
+               } catch (error) {
+                   reject(error);
+               }  
            })
        }
     },

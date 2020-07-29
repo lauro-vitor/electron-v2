@@ -23,8 +23,8 @@ import SelectMember from '../form/SelectMember';
 import validateNameOnKeyDown from "../../validators/persons/validateNameOnKeyDown";
 import validateFormPerson from "../../validators/persons/validateFormPerson";
 import Loading from '../../components/utils/Loading'
-import { dispatchUpdatePerson } from "../../store/dispatchers/persons/";
-import { dispatchGetAllUser } from "../../store/dispatchers/users/";
+import { dispatchUpdatePerson } from "../../store/dispatchers/persons/DispatchPerson";
+import { dispatchGetAllUser } from "../../store/dispatchers/users/DispatchUser";
 import {stringParseBoolean} from '../../utils'
 export default {
   components: {

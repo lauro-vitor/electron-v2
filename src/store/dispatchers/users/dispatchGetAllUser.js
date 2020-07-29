@@ -1,10 +1,10 @@
-import actions from '../../actions'
+import {UserActions} from '../../actions/Actions'
 import store from '../../index'
 
 export default async function() {
     try {
         await store.dispatch({
-            type:actions.GET_ALL_USERS
+            type:UserActions.GET_ALL_USERS
         });
 
    } catch (error) {

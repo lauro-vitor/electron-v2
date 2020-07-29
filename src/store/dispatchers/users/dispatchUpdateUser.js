@@ -1,10 +1,10 @@
-import actions from '../../actions'
+import {UserActions} from '../../actions/Actions'
 import store from '../../index'
 
 export default async function(user) {
     try {
         await store.dispatch({
-            type: actions.UPDATE_USER,
+            type: UserActions.UPDATE_USER,
             user
         });
        console.log('ok')

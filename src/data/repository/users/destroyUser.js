@@ -1,15 +1,6 @@
 const getConnection = require('../connectionFactory');
 
-
-const destroyUser = async id  => {
-    try {
-        return await destroy(id);
-    } catch (error) {
-        return error;
-    }
-}
-
-const destroy = id => {
+const destroyUser = id => {
 
     return new Promise((resolve, reject) => {
        const connection = getConnection();

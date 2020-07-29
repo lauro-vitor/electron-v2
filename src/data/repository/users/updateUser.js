@@ -1,14 +1,6 @@
 const getConnection = require('../connectionFactory');
 
-const updateUser = async (user, id) => {
-    try {
-        return await update(user, id);
-    } catch (error) {
-        return error;
-    }
-}
-
-const update = (user, id) => {
+const updateUser = (user, id) => {
     return new Promise((resolve,  reject) => {
 
         const connection = getConnection();

@@ -9,7 +9,7 @@
 import Header from "../../components/utils/Header";
 import UserTable from "../../components/user/UserTable";
 import Loading from '../../components/utils/Loading'
-import {dispatchGetAllUser} from '../../store/dispatchers/users/'
+import {dispatchGetAllUser} from '../../store/dispatchers/users/DispatchUser'
 export default {
   components: {
     Header,

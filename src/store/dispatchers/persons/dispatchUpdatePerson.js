@@ -1,9 +1,9 @@
-import actions from '../../actions'
+import {PersonActions} from '../../actions/Actions'
 import store from '../../index'
 export default async function (person){
     try {
       await store.cache.dispatch({
-        type: actions.UPDATE_PERSON,
+        type: PersonActions.UPDATE_PERSON,
         person
       });
       alert('Membro alterado com sucesso!');

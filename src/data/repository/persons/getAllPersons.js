@@ -1,14 +1,7 @@
 const getConnection = require('../connectionFactory');
 const hasOne = require('./relations/hasOne');
 
-const getAllPersons = async () => {
-    try {
-        return await getAll();
-    } catch (error) {
-        return error;
-    }
-}
-const getAll = () => {
+const getAllPersons = () => {
 
     return new Promise((resolve, reject) => {
 

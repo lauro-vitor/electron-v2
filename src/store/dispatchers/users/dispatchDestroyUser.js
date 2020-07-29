@@ -1,10 +1,10 @@
 
-import actions from '../../actions'
+import {UserActions} from '../../actions/Actions'
 import store from '../../index'
 export default  async function(id){
     try {
         await store.dispatch({
-            type:actions.DESTROY_USER,
+            type:UserActions.DESTROY_USER,
             id:id,
         });
         console.log('ok')

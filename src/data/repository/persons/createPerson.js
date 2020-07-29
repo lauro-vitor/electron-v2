@@ -1,28 +1,20 @@
 const getConnection = require('../connectionFactory');
 
-const updatePerson = async (person, id) => {
-    try {
-        return await update(person, id);
-    } catch (error) {
-        return error;
-    }
-}
-
-const update = (person, id) => {
+const createPerson = person => {
 
     return new Promise((resolve, reject) => {
+
         const connection = getConnection();
-        const sql = `
-            UPDATE Persons
-            SET name = ?, isBetaMember = ?, userId = ?, updatedAt = now()
-            WHERE id = ?
-        `;
-        const inserts = [
-            person.name,
-            person.isBetaMember,
-            person.userId,
-            id
-        ];
+
+        const sql =
+            `INSERT INTO 
+            Persons (name, isBetaMember, userId, createdAt, updatedAt )
+            VALUES (?, ?, ?, now(), now())`;
+
+        const inserts = [person.name, person.isBetaMember, person.userId];
+
+
+        connection.connect();
 
         connection.beginTransaction(error => {
             if (error) {
@@ -30,28 +22,28 @@ const update = (person, id) => {
             }
 
             connection.query(sql, inserts, async (error, results) => {
+
                 if (error) {
                     return connection.rollback(() => {
                         reject(error);
                     });
                 }
-
-                if (results.changedRows == 1) {
-                    resolve(results);
-                }
+                resolve(results);
 
             });
-
             connection.commit(error => {
+
                 if (error) {
                     return connection.rollback(() => {
-                        reject(error);
+                        return reject(error);
                     });
                 }
+
             });
+
             connection.end();
         });
     });
 }
 
-module.exports = updatePerson;
+module.exports = createPerson;

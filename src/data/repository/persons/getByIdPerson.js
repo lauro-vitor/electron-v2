@@ -1,15 +1,8 @@
 const getConnection = require('../connectionFactory');
 const hasOne = require('./relations/hasOne');   
 
-const getByIdPerson =  async id => {
-    try {
-        return await getById(id);
-    } catch (error) {
-        return error;
-    }
-}
 
-const getById = id => {
+const getByIdPerson = id => {
     return new Promise((resolve, reject) => {
 
         const connection = getConnection();
