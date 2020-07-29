@@ -25,7 +25,8 @@ const createUser = user => {
                 }
 
                 if (results.affectedRows == 1) {
-                    resolve(results);
+                    user.id = results.insertId;
+                    resolve(user);
                 }
             });
 

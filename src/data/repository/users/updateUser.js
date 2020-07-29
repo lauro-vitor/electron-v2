@@ -33,7 +33,7 @@ const updateUser = (user, id) => {
                     });
                 }
                 if(results.changedRows == 1) {
-                    resolve(results);
+                    resolve(user);
                     return;
                 }
                 resolve(null);

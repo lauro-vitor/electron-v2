@@ -1,15 +1,18 @@
 <template>
   <div>
     <Header title="Lista de Usuários" path="/users/register" titleButton="Adicionar Usuário" />
-    <UserTable v-if="false" v-bind:users="users" />
-    <Loading v-bind:contains="contains"  v-bind:nonContains="nonContains"/>
+    <UserTable v-if="contains" v-bind:users="users" />
+    <Loading
+      v-bind:contains="contains"
+      v-bind:errorDispatch="errorDispatch"
+      v-bind:message="messageDispatch" />
   </div>
 </template> 
 <script>
 import Header from "../../components/utils/Header";
 import UserTable from "../../components/user/UserTable";
-import Loading from '../../components/utils/Loading'
-import {dispatchGetAllUser} from '../../store/dispatchers/users/DispatchUser'
+import Loading from '../../components/utils/Loading';
+import {UserActions} from '../../store/actions/Actions'
 export default {
   components: {
     Header,
@@ -18,19 +21,22 @@ export default {
   },
   data: () => ({
     users: [],
-    contains: true,
-    nonContains: true,
+    contains: false,
+    errorDispatch: false,
+    messageDispatch:''
   }),
 
   beforeCreate: async function () {
-    console.log('here before create!')
-    await dispatchGetAllUser();
+    try {
+      this.users = await this.$store.dispatch({
+        type:UserActions.GET_ALL_USERS
+      });
+      this.contains = true;
+    } catch (error) {
+      this.errorDispatch = true;
+      this.messageDispatch = error;
+    }
+   
   },
 };
 </script>
-<style scoped>
-#progressContainter {
-  text-align: center;
-  margin-top: 50px;
-}
-</style>
