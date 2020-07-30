@@ -1,5 +1,4 @@
 import UserRepository from '../repository/users/UserRepository';
-import messageErrorUser from '../repository/users/error/messageErrorUser';
 import { UserActions } from '../../store/actions/Actions';
 import responseIpc from './responseIpc';
 
@@ -9,7 +8,7 @@ export default function (ipcMain) {
         try {
             response = responseIpc(false, await UserRepository.getAllUsers(), null);
         } catch (error) {
-            response = responseIpc(true, null, messageErrorUser(error));
+            response = responseIpc(true, null, error);
         }
         event.returnValue = response;
     });
@@ -19,7 +18,7 @@ export default function (ipcMain) {
         try {
             response = responseIpc(false, await UserRepository.createUser(user), null)
         } catch (error) {
-            response = responseIpc(true, null, messageErrorUser(error));
+            response = responseIpc(true, null, error);
         }
         event.returnValue = response;
     });
@@ -29,7 +28,7 @@ export default function (ipcMain) {
         try {
             response = responseIpc(false, await UserRepository.updateUser(user, user.id), null);
         } catch (error) {
-            response = responseIpc(true, null, messageErrorUser(error));
+            response = responseIpc(true, null, error);
         }
         event.returnValue = response;
     });
@@ -41,7 +40,6 @@ export default function (ipcMain) {
         } catch (error) {
             response = responseIpc(true, null, error);
         }
-        console.log(response);
         event.returnValue = response;
     });
 }

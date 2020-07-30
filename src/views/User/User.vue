@@ -28,13 +28,17 @@ export default {
 
   beforeCreate: async function () {
     try {
-      this.users = await this.$store.dispatch({
+      await this.$store.dispatch({
         type:UserActions.GET_ALL_USERS
       });
-      this.contains = true;
     } catch (error) {
       this.errorDispatch = true;
       this.messageDispatch = error;
+    }
+    let { getUsers } = this.$store.getters;
+    if (getUsers.length > 0) {
+      this.users = getUsers;
+      this.contains = true;
     }
    
   },

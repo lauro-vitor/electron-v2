@@ -24,18 +24,13 @@ const moduleUser = {
         },
 
         DESTROY_USER(state, payload) {
-            console.log('state', state);
-            console.log('payload', payload);
-            
+
             let index = state.users.indexOf(
                 state.users.find(user => user.id == payload.id)
             );
-            console.log(index);
-            /*console.log(state.users[index]);
             if (index >= 0) {
                 state.users.splice(index, 1);
-            }*/
-            //console.log('in destroy user mutations ', state.users[index]);
+            }
         }
 
     },
@@ -45,18 +40,18 @@ const moduleUser = {
                 let response, users;
                 try {
                     response = ipcRenderer.sendSync(UserActions.GET_ALL_USERS);
+                    if (!response.error) {
+                        users = response.data;
+                        commit({
+                            type: UserMutations.GET_ALL_USERS,
+                            users
+                        });
+                        resolve();
+                    }
+                    reject(response.message)
                 } catch (error) {
                     reject(error);
                 }
-                if (!response.error) {
-                    users = response.data;
-                    commit({
-                        type: UserMutations.GET_ALL_USERS,
-                        users
-                    });
-                    resolve(users);
-                }
-                reject(response.message)
             });
         },
         ADD_USER({ commit }, payload) {
@@ -64,17 +59,17 @@ const moduleUser = {
                 let result;
                 try {
                     result = ipcRenderer.sendSync(UserActions.ADD_USER, payload.user);
+                    if (!result.error) {
+                        commit({
+                            type: UserMutations.ADD_USER,
+                            user: result.data
+                        });
+                        resolve();
+                    }
+                    reject(result.message);
                 } catch (error) {
                     reject(error);
                 }
-                if (!result.error) {
-                    commit({
-                        type: UserMutations.ADD_USER,
-                        user: result.data
-                    });
-                    resolve();
-                }
-                reject(result.message);
             });
         },
         UPDATE_USER({ commit }, payload) {
@@ -82,37 +77,36 @@ const moduleUser = {
                 let result;
                 try {
                     result = ipcRenderer.sendSync(UserActions.UPDATE_USER, payload.user);
+                    if (!result.error) {
+                        commit({
+                            type: UserMutations.UPDATE_USER,
+                            user: result.data,
+                        });
+                        resolve();
+                    }
+                    reject(result.message);
                 } catch (error) {
                     reject(error);
                 }
-                if(!result.error) {
-                    commit({
-                        type: UserMutations.UPDATE_USER,
-                        user: result.data,
-                    });
-                    resolve();
-                }
-                reject(result.message);
             });
         },
-        DESTROY_USER({commit}, payload) {
-            return new Promise(function(resolve, reject) {
+        DESTROY_USER({ commit }, payload) {
+            return new Promise(function (resolve, reject) {
                 let result;
                 try {
                     result = ipcRenderer.sendSync(UserActions.DESTROY_USER, payload.id);
+                    if (!result.error) {
+                        commit({
+                            type: UserMutations.DESTROY_USER,
+                            id: payload.id
+                        });
+                        resolve();
+                    }
+                    reject(result.message)
                 } catch (error) {
-                    reject(error)
+                    reject(error);
                 }
-                if(!result.error){
-                    commit({
-                        type: UserMutations.DESTROY_USER,
-                        id: payload.id
-                    });
-                    resolve();
-                }
-                reject(result.message)
-                console.log('result ', result);
-            })
+            });
         }
     },
     getters: {

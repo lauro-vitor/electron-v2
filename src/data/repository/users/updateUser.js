@@ -1,4 +1,5 @@
 const getConnection = require('../connectionFactory');
+const messageErrorUser = require('./error/messageErrorUser');
 
 const updateUser = (user, id) => {
     return new Promise((resolve,  reject) => {
@@ -23,24 +24,24 @@ const updateUser = (user, id) => {
 
         connection.beginTransaction(error => {
             if(error) {
-                return reject(error);
+                reject('error ao iniciar trasanção na base de dados!');
             }
 
             connection.query(sql, inserts, async (error, results) => {
                 if(error) {
                     return connection.rollback(() => {
-                        reject(error);
+                        reject(messageErrorUser(error));
                     });
                 }
                 if(results.changedRows == 1) {
                     resolve(user);
-                    return;
                 }
-                resolve(null);
+                reject('usuário não atualizado!');
             });
             connection.commit(error => {
-                if(error)
-                    return reject(error);
+                if(error) {
+                    reject('error ao confirmar trasação na base de dados, usuário não atualizado!');
+                }
             });
 
             connection.end();

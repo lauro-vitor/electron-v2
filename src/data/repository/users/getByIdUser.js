@@ -1,5 +1,5 @@
 const getConnection = require('../connectionFactory');
-
+const messageErrorUser = require('./error/messageErrorUser');
 const getByIdUser = id => {
 
     return new Promise((resolve, reject) => {
@@ -11,17 +11,13 @@ const getByIdUser = id => {
         connection.connect();
 
         connection.query(sql, id, (error, results) => {
-            
             if(error) {
-                return reject(error);
+              reject(messageErrorUser(error));
             }
-
             if(results.length > 0) {
                 resolve(results);
-                return;
             }
-            
-            resolve(null);
+            reject(`usuário de id=${id} não registrado!`);
         });
 
         connection.end();

@@ -25,7 +25,7 @@ export default {
         Loading
     },
     beforeCreate: async function (){
-      
+      //1º passo, trazer os dados do banco
     }
 }
 </script>

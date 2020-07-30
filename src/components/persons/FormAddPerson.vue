@@ -22,8 +22,8 @@ import SelectMember from '../form/SelectMember';
 import SelectUser from '../form/SelectUser';
 import validateNameOnKeyDown from "../../validators/persons/validateNameOnKeyDown";
 import validateFormPerson from "../../validators/persons/validateFormPerson";
-import { dispatchAddPerson } from "../../store/dispatchers/persons/DispatchPerson";
-import { dispatchGetAllUser } from "../../store/dispatchers/users/DispatchUser";
+/*import { dispatchAddPerson } from "../../store/dispatchers/persons/DispatchPerson";
+import { dispatchGetAllUser } from "../../store/dispatchers/users/DispatchUser";*/
 import {stringParseBoolean} from '../../utils'
 import Loading from '../../components/utils/Loading'
 export default {
@@ -54,13 +54,14 @@ export default {
           isBetaMember: stringParseBoolean(this.isBetaMember),
           userId: this.userId,
         };
-        await dispatchAddPerson(person);
+        console.log('ok person is validate ', person)
+       // await dispatchAddPerson(person);
         this.$router.push("/persons");
       }
     },
   },
   beforeCreate: async function () {
-    await dispatchGetAllUser();
+    //await dispatchGetAllUser();
     if(this.$store.getters.getUsers.length > 0){
       this.contains = true;
       return;

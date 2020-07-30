@@ -1,5 +1,5 @@
 const getConnection = require('../connectionFactory');
-
+const messageErrorUser = require('./error/messageErrorUser');
 
 const createUser = user => {
     return new Promise((resolve, reject) => {
@@ -15,12 +15,12 @@ const createUser = user => {
         connection.beginTransaction(error => {
 
             if (error) {
-                return reject(error);
+                reject('error ao inciar transação na base de dados');
             }
             connection.query(sql, inserts, async (error, results) => {
                 if (error) {
                     return connection.rollback(() => {
-                        reject(error);
+                        reject(messageErrorUser(error));
                     });
                 }
 
@@ -28,14 +28,14 @@ const createUser = user => {
                     user.id = results.insertId;
                     resolve(user);
                 }
+                reject('Não foi possível inserir usuário, tente novamente!');
             });
 
             connection.commit(error => {
                 if (error) {
                     connection.rollback(() => {
-                        throw error;
+                        reject('error ao confirmar transação na base de dados!');
                     });
-                    reject(error);
                 }
             });
             connection.end();

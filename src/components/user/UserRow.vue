@@ -12,7 +12,7 @@
 <script>
 import ButtonDestroy from "../utils/ButtonDestroy";
 import RouterLinkButton from "../utils/RouterLinkButton";
-import { UserActions } from '../../store/actions/Actions';
+import { UserActions } from "../../store/actions/Actions";
 
 export default {
   data: () => ({
@@ -30,15 +30,14 @@ export default {
       this.route = `/users/update/${id}`;
     },
     destroy: async function (id) {
-
       try {
-          await this.$store.dispatch({
-              type:UserActions.DESTROY_USER,
-              id,
-          })
-          console.log('destroy its ok!');
+        await this.$store.dispatch({
+          type: UserActions.DESTROY_USER,
+          id,
+        });
+        alert("Usuário excluído com sucesso!");
       } catch (error) {
-          console.log(error)
+        alert(error);
       }
     },
   },

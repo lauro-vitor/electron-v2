@@ -18,9 +18,10 @@ const destroyUser = id => {
 
             connection.query(sql, id, (error, results) => {
                 if (error) {
-                    connection.rollback(() => {
+                    return connection.rollback(() => {
                         reject(messageErrorUser(error));
                     });
+                   
                 }
                 if (results.affectedRows == 1) {
                     resolve();
