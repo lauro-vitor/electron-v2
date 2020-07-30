@@ -11,21 +11,24 @@
       <SelectUser v-model="userId" v-bind:users="this.$store.getters.getUsers" />
       <SubmitButton title="salvar" />
     </form>
-    <Loading v-bind:contains="contains" v-bind:nonContains="nonContains" />
+    <Loading
+      v-bind:contains="contains"
+      v-bind:errorDispatch="errorDispatch"
+      v-bind:messageDispatch="messageDispatch"
+    />
   </div>
 </template>
 <script>
 import TextInput from "../form/TextInput";
 import SubmitButton from "../form/SubmitButton";
 import MessageError from "../form/MessageError";
-import SelectUser from '../form/SelectUser'
-import SelectMember from '../form/SelectMember';
+import SelectUser from "../form/SelectUser";
+import SelectMember from "../form/SelectMember";
 import validateNameOnKeyDown from "../../validators/persons/validateNameOnKeyDown";
 import validateFormPerson from "../../validators/persons/validateFormPerson";
-import Loading from '../../components/utils/Loading'
-//import { dispatchUpdatePerson } from "../../store/dispatchers/persons/DispatchPerson";
-//import { dispatchGetAllUser } from "../../store/dispatchers/users/DispatchUser";
-import {stringParseBoolean} from '../../utils'
+import Loading from "../../components/utils/Loading";
+import { UserActions, PersonActions } from "../../store/actions/Actions";
+import { stringParseBoolean } from "../../utils";
 export default {
   components: {
     TextInput,
@@ -46,14 +49,14 @@ export default {
     userId: 0,
     personToUpdate: null,
     contains: false,
-    nonContains: false,
+    errorDispatch: false,
+    messageDispatch: "",
   }),
   methods: {
     validateNameOnKeyDownLoacal: function () {
       validateNameOnKeyDown(this);
     },
     submitForm: async function () {
-      
       if (validateFormPerson(this)) {
         let person = {
           id: this.id,
@@ -61,9 +64,17 @@ export default {
           isBetaMember: stringParseBoolean(this.isBetaMember),
           userId: this.userId,
         };
-        console.log('ok person its validate ', person)
-        //await dispatchUpdatePerson(person);
-        this.$router.push("/persons");
+        try {
+          await this.$store.dispatch({
+            type: PersonActions.UPDATE_PERSON,
+            person,
+          });
+          alert("membro alterado com sucesso!");
+        } catch (error) {
+          alert(error);
+        } finally {
+          this.$router.push("/persons");
+        }
       }
     },
     mountFormPerson: function () {
@@ -78,12 +89,15 @@ export default {
     this.mountFormPerson();
   },
   beforeCreate: async function () {
-    //await dispatchGetAllUser();
-    if (this.$store.getters.getUsers.length > 0) {
+    try {
+      await this.$store.dispatch({
+        type: UserActions.GET_ALL_USERS,
+      });
       this.contains = true;
-      return;
+    } catch (error) {
+      this.messageDispatch = error;
+      this.errorDispatch = true;
     }
-    this.nonContains = true;
   },
 };
 </script>

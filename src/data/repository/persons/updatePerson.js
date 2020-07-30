@@ -1,5 +1,5 @@
 const getConnection = require('../connectionFactory');
-
+const messageErrorPerson = require('./error/messageErrorPerson')
 
 const updatePerson = (person, id) => {
 
@@ -19,26 +19,26 @@ const updatePerson = (person, id) => {
 
         connection.beginTransaction(error => {
             if (error) {
-                return reject(error);
+                reject('Error ao iniciar transação!');
             }
 
-            connection.query(sql, inserts, async (error, results) => {
+            connection.query(sql, inserts, (error, results) => {
                 if (error) {
                     return connection.rollback(() => {
-                        reject(error);
+                        reject(messageErrorPerson(error));
                     });
                 }
 
                 if (results.changedRows == 1) {
-                    resolve(results);
+                    resolve(person);
                 }
-
+                reject('Membro não atualizado!');
             });
 
             connection.commit(error => {
                 if (error) {
-                    return connection.rollback(() => {
-                        reject(error);
+                    connection.rollback(() => {
+                        reject('error ao confirmar transação!');
                     });
                 }
             });

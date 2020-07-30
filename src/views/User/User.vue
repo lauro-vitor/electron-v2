@@ -5,7 +5,7 @@
     <Loading
       v-bind:contains="contains"
       v-bind:errorDispatch="errorDispatch"
-      v-bind:message="messageDispatch" />
+      v-bind:messageDispatch="messageDispatch" />
   </div>
 </template> 
 <script>

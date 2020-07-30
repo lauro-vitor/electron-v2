@@ -10,6 +10,9 @@ const moduleUser = {
     mutations: {
         GET_ALL_USERS(state, payload) {
             state.users = [...payload.users];
+            state.users.sort(function(a,b){
+                return a.id - b.id;
+            })
         },
         ADD_USER(state, payload) {
             state.users = [...state.users, payload.user];

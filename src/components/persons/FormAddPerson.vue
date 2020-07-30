@@ -11,7 +11,11 @@
       <SelectUser v-model="userId" v-bind:users="this.$store.getters.getUsers" />
       <SubmitButton title="salvar" />
     </form>
-    <Loading v-bind:contains="contains" v-bind="nonContains" />
+    <Loading 
+      v-bind:contains="contains" 
+      v-bind:errorDispatch="errorDispatch"
+      v-bind:messageDispatch="messageDispatch"
+      />
   </div>
 </template>
 <script>
@@ -22,10 +26,9 @@ import SelectMember from '../form/SelectMember';
 import SelectUser from '../form/SelectUser';
 import validateNameOnKeyDown from "../../validators/persons/validateNameOnKeyDown";
 import validateFormPerson from "../../validators/persons/validateFormPerson";
-/*import { dispatchAddPerson } from "../../store/dispatchers/persons/DispatchPerson";
-import { dispatchGetAllUser } from "../../store/dispatchers/users/DispatchUser";*/
 import {stringParseBoolean} from '../../utils'
 import Loading from '../../components/utils/Loading'
+import { UserActions, PersonActions } from '../../store/actions/Actions';
 export default {
   components: {
     TextInput,
@@ -41,7 +44,8 @@ export default {
     isBetaMember: true,
     userId: 0,
     contains: false,
-    nonContains: false,
+    errorDispatch:false,
+    messageDispatch: "",
   }),
   methods: {
     validateNameOnKeyDownLoacal: function () {
@@ -54,19 +58,31 @@ export default {
           isBetaMember: stringParseBoolean(this.isBetaMember),
           userId: this.userId,
         };
-        console.log('ok person is validate ', person)
-       // await dispatchAddPerson(person);
-        this.$router.push("/persons");
+        try {
+          await this.$store.dispatch({
+            type:PersonActions.ADD_PERSON,
+            person
+          });
+          
+          alert('Membro adicionado com sucesso!');
+        } catch (error) {
+          alert(error);
+        }finally{
+          this.$router.push("/persons");
+        }
       }
     },
   },
   beforeCreate: async function () {
-    //await dispatchGetAllUser();
-    if(this.$store.getters.getUsers.length > 0){
+    try {
+      await this.$store.dispatch({
+        type:UserActions.GET_ALL_USERS
+      });
       this.contains = true;
-      return;
+    } catch (error) {
+      this.messageDispatch = error;
+      this.errorDispatch = true;
     }
-    this.nonContains = true;
   },
 };
 </script>

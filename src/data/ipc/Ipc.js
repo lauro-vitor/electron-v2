@@ -1,5 +1,6 @@
 import {ipcMain} from 'electron';
 import userIpc from './userIpc';
-userIpc(ipcMain)
-
+import personIpc from './personIpc'
+userIpc(ipcMain);
+personIpc(ipcMain);
 export default ipcMain;

@@ -13,8 +13,8 @@
 <script>
 import ButtonDestroy from '../utils/ButtonDestroy'
 import RouterLinkButton from '../utils/RouterLinkButton'
-import {dispatchDestroyPerson} from '../../store/dispatchers/persons/DispatchPerson'
 import {booleanParseString} from '../../utils/'
+import {PersonActions} from '../../store/actions/Actions'
 export default {
     data: () => ({
         route: '',
@@ -34,8 +34,15 @@ export default {
             this.route = `/persons/update/${id}`;
         },
         destroyPerson: async function (id){
-           await dispatchDestroyPerson(id);
-           alert('Usuário excluido com sucesso!');
+           try {
+               await this.$store.dispatch({
+                   type: PersonActions.DESTROY_PERSON,
+                   id
+               });
+               alert('Membro excluído com sucesso!');
+           } catch (error) {
+               alert(error);
+           }
         },
     },
     created: function(){

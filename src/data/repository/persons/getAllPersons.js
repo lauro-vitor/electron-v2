@@ -1,5 +1,6 @@
 const getConnection = require('../connectionFactory');
 const hasOne = require('./relations/hasOne');
+const messageErrorPerson = require('./error/messageErrorPerson');
 
 const getAllPersons = () => {
 
@@ -31,7 +32,7 @@ const getAllPersons = () => {
         connection.query(sql,  (error, results) => {
 
             if(error) {
-                return reject(error);
+               reject(messageErrorPerson(error));
             }
 
             if(results.length > 0) {
@@ -44,7 +45,7 @@ const getAllPersons = () => {
                 resolve(personsWithRelations);
                 return;
             }
-            resolve(results);
+            reject('Não existe membros cadastrados!');
         });
         
         connection.end();

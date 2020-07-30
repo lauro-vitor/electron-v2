@@ -1,6 +1,6 @@
 const getConnection = require('../connectionFactory');
 const hasOne = require('./relations/hasOne');   
-
+const messageErrorPerson = require('./error/messageErrorPerson');
 
 const getByIdPerson = id => {
     return new Promise((resolve, reject) => {
@@ -30,14 +30,13 @@ const getByIdPerson = id => {
         connection.query(sql, id, async (error, results) => {
 
             if(error) {
-                return reject(error);
+                reject(messageErrorPerson(error));
             }
 
             if(results.length > 0 ) {
                 resolve({person:hasOne(results[0])});
-                return;
             }
-            resolve(results);
+            reject('Membro não cadastrado!');
             
         });
 

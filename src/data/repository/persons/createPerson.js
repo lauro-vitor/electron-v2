@@ -1,4 +1,5 @@
 const getConnection = require('../connectionFactory');
+const messageErrorPerson = require('./error/messageErrorPerson');
 
 const createPerson = person => {
 
@@ -18,24 +19,26 @@ const createPerson = person => {
 
         connection.beginTransaction(error => {
             if (error) {
-                return reject(error);
+                reject('Erro ao iniciar transação no banco de dados!');
             }
 
             connection.query(sql, inserts, async (error, results) => {
 
                 if (error) {
                     return connection.rollback(() => {
-                        reject(error);
+                        reject(messageErrorPerson(error));
                     });
                 }
-                resolve(results);
-
+                if (results.affectedRows == 1) {
+                    person.id = results.insertId;
+                    resolve(person)
+                }
             });
             connection.commit(error => {
 
                 if (error) {
-                    return connection.rollback(() => {
-                        return reject(error);
+                    connection.rollback(() => {
+                        reject('error ao confirmar a transação!');
                     });
                 }
 
