@@ -28,7 +28,7 @@ export default {
 
   beforeCreate: async function () {
     try {
-      await this.$store.dispatch({
+      await this.$store.cache.dispatch({
         type:UserActions.GET_ALL_USERS
       });
     } catch (error) {

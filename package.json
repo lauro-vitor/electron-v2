@@ -2,6 +2,12 @@
   "name": "electron-v2",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "lauro",
+    "email": "laurovpina@gmail.com"
+  },
+  "homepage": "https://github.com/lauro-vitor/electron-v2",
+  "description": "A Vue.js project",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -19,7 +25,8 @@
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuetify": "^2.2.11",
-    "vuex": "^3.5.1"
+    "vuex": "^3.5.1",
+    "vuex-cache": "^3.3.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",

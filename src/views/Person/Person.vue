@@ -28,7 +28,7 @@ export default {
   },
   beforeCreate: async function () {
     try {
-      await this.$store.dispatch({
+      await this.$store.cache.dispatch({
         type: PersonActions.GET_ALL_PERSON,
       });
       this.persons = this.$store.getters.getAllPersons;

@@ -9098,6 +9098,11 @@ vuetify@^2.2.11:
   resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.3.6.tgz#5e667eb120ae1498837cdee5515cc175c1ee4b5e"
   integrity sha512-mnn5ijJOQf6o443A2ymKrwJAFjaloU0x1QJJArswHv+y2FsSp9obZ6KXDKuzxO6hdGt8VDt/p4S2Hs8A41kbOg==
 
+vuex-cache@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/vuex-cache/-/vuex-cache-3.3.0.tgz#327ce4692a5c30fc34e7c11b967180491bb46b92"
+  integrity sha512-z9VuO2TeP2/kBxR6eJR29wUiv1LM+iE35UgrPS561XP9DV2wXb27Wum6B+SdYXOaAuZZmJ1HPCdu9ZNfa02G3Q==
+
 vuex@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.5.1.tgz#f1b8dcea649bc25254cf4f4358081dbf5da18b3d"
